@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>MovieBuff</title>
+        <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboardStyle.css') }}"/>
+
+  </head>
+
+    </head>
+     <body class="sb-nav-fixed" >
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">MovieBuff</a>
+            <!-- Navbar Search-->
+            <!-- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0"> -->
+                <div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                    <input id="searchbox" type="text" placeholder="Search a Movie..." aria-label="Search" aria-describedby="basic-addon2" style="border-radius:7px"/>
+                </div>
+        </nav>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                        Start Bootstrap
+                    </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <h1 class="mt-4"></h1>
+<!--                        <ol class="breadcrumb mb-4">-->
+<!--                            <li class="breadcrumb-item active">Dashboard</li>-->
+<!--                        </ol>-->
+
+                         <div style="height:300px;width:300px;border-radius: 10px;float:left">
+                             <div class="card-header">Available on </div>
+                         <div  id="stream-sites" >
+                          <!-- {{stream}} -->
+                          {% for movie,sites in stream.items() %}
+                          <li><b>{{movie}}</b>:
+                             {% for site in sites %}<br>
+                             {% if site == "Amazon Instant Video" %}
+                             <img src="{{ url_for('static', filename = 'amazon.png') }}" width="20" height="20"></img>
+                             {% endif %}
+                             {% if site == "Google Play" %}
+                             <img src="{{ url_for('static', filename = 'youtube.png') }}" width="20" height="20"></img>
+                             {% endif %}
+                             {% if site == "iTunes" %}
+                             <img src="{{ url_for('static', filename = 'itunes.png') }}" width="20" height="20"></img>
+                             {% endif %}
+                             {% if site == "Netflix" %}
+                             <img src="{{ url_for('static', filename = 'netflix.png') }}" width="20" height="20"></img>
+                             {% endif %}
+
+                          {{site}}
+                          {% endfor %}
+                          </li>
+                          {% endfor %}
+                         </div>
+                         </div>
+
+                        <div style="width:500px;height:900px;float:left; padding: 0px 30px 0">
+                            <div class="card-header">IMDB details </div>
+                            <div id="imdb">
+                                {% for key,value in imdb_details.items() %}
+                                {% if key != "Cast" %}
+                                   <li><b>{{key}}:</b></li>
+                                   {{value}}
+                                {% else %}
+                                   <li><b>{{key}}:</b></li>
+                                   {% for c in value %}
+                                   {{c}}
+                                   {% endfor %}
+                                {% endif %}
+                                {% endfor %}
+
+                             </div>
+                        </div>
+                        <div style="float:left; padding: 0px 20px 0">
+                            <div class="card-header">Chatter </div>
+                     <div id="tweets">
+                     <script> var ids = {{target|tojson}};
+                     ids= JSON.parse(ids);
+                     </script>
+                     <script src="https://platform.twitter.com/widgets.js" crossorigin="anonymous" charset="utf-8"></script>
+                     <script src='https://cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js'></script>
+                     <script src="{{ url_for('static', filename = 'script.js') }}"></script>
+                   <script>showTweets();</script>
+                    </div>
+                        </div>
+
+   <body>
+         <input id="searchbox" type="text" />
+     <div id="tweets"></div> 
+     <script> var ids = {{target|tojson}};
+     ids= JSON.parse(ids);
+     </script>
+     <script src="https://platform.twitter.com/widgets.js" crossorigin="anonymous" charset="utf-8"></script>
+     <script src='https://cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js'></script>
+     <script src="{{ url_for('static', filename = 'script.js') }}"></script> 
+   <script>showTweets();</script>
+
+
+   <div id="imdb">
+      {% for key,value in imdb_details.items() %}
+      {% if key != "cast" %}
+         <li><b>{{key}}:</b></li>
+         <li>{{value}}</li>
+      {% else %}
+         <li><b>{{key}}:</b></li>
+         {% for c in value %}
+         <li>{{c}}
+         {% endfor %}</li>
+      {% endif %}
+      {% endfor %}
+
+   </div>
+
+
+      <!-- {% for item in target %}
+      <li>{{ item["url"] }}</li> 
+    {% endfor %}  -->
+   </body>
+</html>
+
+
